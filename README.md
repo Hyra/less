@@ -20,7 +20,11 @@ Now every `.less` file from `webroot/less` will be converted to its `.css` equiv
 
 In your `default.ctp` layout you can just use `echo $this->Html->css('your_css_file');` as you always do
 
+## Ignoring files (@importing)
+Sometimes you want to use `@import` to combine files, which means you don't want all source .less files to be converted to seperate .css files. That'd be redundant. Simply prefix your .less files with an underscore (`_yourfile.less`)
+
 ## Features
 
 - Conversion happens on every request while in development mode `(debug at 0)`
 - Conversion happens every time the cache timer expires, which you can specify in `controllers/components/less.php`
+- Option to ignore files.
