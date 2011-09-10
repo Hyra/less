@@ -52,7 +52,7 @@ class LessComponent extends Object {
 		if(!Cache::read('lessed') || Configure::read('debug') > 0) {
 			foreach($this->lessFolder->find() as $file) {
 				$file = new File($file);
-				if($file->ext() == 'less') {
+				if($file->ext() == 'less' && substr($file->name, 0, 1) !== '_') {
 					$lessFile = $this->lessFolder->path . DS . $file->name;
 					$cssFile = $this->cssFolder->path . DS . str_replace('.less', '.css', $file->name);
 					lessc::ccompile($lessFile, $cssFile);
