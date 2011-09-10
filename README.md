@@ -18,6 +18,8 @@ In your `app_controller.php` add the component:
 
 Now every `.less` file from `webroot/less` will be converted to its `.css` equivalent in `webroot/css`
 
+In your `default.ctp` layout you can just use `echo $this->Html->css('your_css_file');` as you always do
+
 ## Features
 
 - Conversion happens on every request while in development mode `(debug at 0)`
