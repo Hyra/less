@@ -33,11 +33,11 @@ class LessComponent extends Object {
 	private $cacheTime;
 	
 	/**
-	* Startup logic. Sets the options
+	* Initialisation logic. Sets the options
 	* @return void
 	* @author Stef van den Ham
 	**/
-	public function startup() {
+	public function initialize() {
 		$this->lessFolder = new Folder(ROOT . DS . APP_DIR . DS . 'webroot' . DS . 'less');
 		$this->cssFolder = new Folder(ROOT . DS . APP_DIR . DS . 'webroot' . DS . 'css');
 		$this->cacheTime = '5 seconds';
