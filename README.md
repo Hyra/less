@@ -3,9 +3,9 @@ This little component converts your .less files into .css without relying on Nod
 ## Installation
 
 #### Clone
-Clone from github: in your plugin directory type `git clone https://github.com/Hyra/CakePHP-LessCss.git less`
+Clone from github: in your plugin directory type `git clone https://github.com/Hyra/less.git less`
 #### Submodule
-Add as Git submodule: in your plugin directory type `git submodule add https://github.com/Hyra/CakePHP-LessCss.git less`
+Add as Git submodule: in your plugin directory type `git submodule add https://github.com/Hyra/less.git less`
 #### Manual
 Download as archive from github and extract to `app/plugins/less`
 
