@@ -21,7 +21,9 @@
  */
 
 App::uses('lessc', 'Less.Vendor');
-App::uses('Folder', 'Core');
+App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
+App::uses('Component', 'Controller');
 
 class LessComponent extends Component {
 
