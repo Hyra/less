@@ -20,35 +20,40 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::import('Vendor', 'Less.Lessc');
-App::import('Core', 'Folder');
+App::uses('lessc', 'Less.Vendor');
+App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
+App::uses('Component', 'Controller');
 
-class LessComponent extends Object {
-	
+class LessComponent extends Component {
+
 	/**
 	* Customizable options
 	**/
 	private $lessFolder;
 	private $cssFolder;
 	private $cacheTime;
-	
+
 	/**
-	* Initialisation logic. Sets the options
-	* @return void
-	* @author Stef van den Ham
-	**/
-	public function initialize() {
+	 * Initialisation logic. Sets the options
+	 *
+	 * @param Controller $controller
+	 * @return void
+	 * @author Stef van den Ham
+	 * */
+	public function initialize($controller) {
 		$this->lessFolder = new Folder(ROOT . DS . APP_DIR . DS . 'webroot' . DS . 'less');
 		$this->cssFolder = new Folder(ROOT . DS . APP_DIR . DS . 'webroot' . DS . 'css');
 		$this->cacheTime = '5 seconds';
 	}
-	
+
 	/**
-	* Main conversion
-	* @return void
-	* @author Stef van den Ham
-	**/
-	public function beforeRender() {
+	 * Main conversion
+	 * @param Controller $controller
+	 * @return void
+	 * @author Stef van den Ham
+	 */
+	public function beforeRender($controller) {
 		if(!Cache::read('lessed') || Configure::read('debug') > 0) {
 			foreach($this->lessFolder->find() as $file) {
 				$file = new File($file);
@@ -62,5 +67,5 @@ class LessComponent extends Object {
 			Cache::write('lessed', time());
 		}
 	}
-	
+
 };
