@@ -60,7 +60,9 @@ class LessComponent extends Component {
 				if($file->ext() == 'less' && substr($file->name, 0, 1) !== '_') {
 					$lessFile = $this->lessFolder->path . DS . $file->name;
 					$cssFile = $this->cssFolder->path . DS . str_replace('.less', '.css', $file->name);
-					lessc::ccompile($lessFile, $cssFile);
+					if (filemtime($cssFile) < filemtime($lessFile)) { // Is the css file outdated?
+						lessc::ccompile($lessFile, $cssFile);
+					}
 				}
 			}
 			Cache::set(array('duration' => $this->cacheTime));
