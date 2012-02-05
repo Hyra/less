@@ -55,11 +55,13 @@ class LessComponent extends Component {
 	 */
 	public function beforeRender($controller) {
 		if(!Cache::read('lessed') || Configure::read('debug') > 0) {
-			foreach($this->lessFolder->find() as $file) {
+			foreach($this->lessFolder->findRecursive() as $file) {
 				$file = new File($file);
 				if($file->ext() == 'less' && substr($file->name, 0, 1) !== '_') {
-					$lessFile = $this->lessFolder->path . DS . $file->name;
-					$cssFile = $this->cssFolder->path . DS . str_replace('.less', '.css', $file->name);
+					$f = new Folder();
+					$f->create(str_replace($this->lessFolder->path, $this->cssFolder->path, $file->Folder->path));
+					$lessFile = $file->Folder->path . DS . $file->name;
+					$cssFile = str_replace('.less', '.css', str_replace($this->lessFolder->path, $this->cssFolder->path, $lessFile));
 					if (!file_exists($cssFile) || filemtime($cssFile) < filemtime($lessFile)) { // Is the css file outdated?
 						lessc::ccompile($lessFile, $cssFile);
 					}
