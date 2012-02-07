@@ -27,7 +27,17 @@ Where you want to use LESS files, add the helper. Usually this will be your `App
 
 Next, simply add the less files to your views:
 
-	$this->Less->css('yourfile');
+	echo $this->Less->css('yourfile');
+	
+or
+	
+	echo $this->Less->css(array(
+			'bootstrap/bootstrap',
+			'prettify',
+		)
+	);
 
-This will check if you have a .less file with the same name in your less directory and if so, compile it to css and place it to the css directory
+It doesn't matter if you link to stolen .css files directly, the Helper will check for the existance of a .less version first, and fall back if it doesn't find one.
+
+If it does find a corresponding .less file with the same name in your less directory, it will compile it to css and place it in your css directory
 
