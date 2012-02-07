@@ -3,7 +3,7 @@
 I decided to change the LESS component to a Helper, as it feels right and gives you more control.
 It fully works with Twitter Bootstrap 2 and have yet to find LESS functionality that doesn't compile.
 
-## What does it do>
+## What does it do, and why
 
 This little Helper converts your .less files into .css without relying on Node.js or client-side parsing.
 Everything is compiled on the server, cached, and served as regular css through PHP.
