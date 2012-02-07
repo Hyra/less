@@ -45,6 +45,12 @@ class LessHelper extends HtmlHelper {
 					$this->auto_compile_less($source, $target);
 				}
 			}
+		} else {
+			$source = $this->lessFolder->path . DS . $file . '.less';
+			if(file_exists($source)) {
+				$target = str_replace('.less', '.css', str_replace($this->lessFolder->path, $this->cssFolder->path, $source));
+				$this->auto_compile_less($source, $target);
+			}
 		}
 		echo parent::css($file);
 	}
