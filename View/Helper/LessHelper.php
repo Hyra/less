@@ -19,14 +19,13 @@
  * @copyright     Copyright 2011, Mindthecode (http://www.mindthecode.com)
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 App::uses('AppHelper', 'View/Helper');
 App::uses('HtmlHelper', 'View/Helper');
-
-App::uses('lessc', 'Less.Vendor');
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 App::uses('Component', 'Controller');
+
+App::uses('lessc', 'Less.Vendor');
 
 class LessHelper extends HtmlHelper {
 	
@@ -56,14 +55,14 @@ class LessHelper extends HtmlHelper {
 	}
 
 	public function auto_compile_less($less_fname, $css_fname) {
-		// Check if cache is writable
+		// Check if cache folder is writable
 		if(!is_writable(CACHE . 'less')) {
 			echo '<span class="notice">';
 			echo __d('cake_dev', 'Your app/tmp/cache/less directory is NOT writable.');
 			echo '</span>';
 		}
 		
-		// load the cache
+		// Load the cache
 		$cache_fname = CACHE . 'less' . DS . str_replace('/', '_', str_replace($this->lessFolder->path, '', $less_fname).".cache");
 		
 		if (file_exists($cache_fname)) {
