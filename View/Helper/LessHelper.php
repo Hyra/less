@@ -62,9 +62,10 @@ class LessHelper extends HtmlHelper {
 			echo '</span>';
 		}
 		
-		// Load the cache
+		// Cache location
 		$cache_fname = CACHE . 'less' . DS . str_replace('/', '_', str_replace($this->lessFolder->path, '', $less_fname).".cache");
 		
+		// Load the cache
 		if (file_exists($cache_fname)) {
 			$cache = unserialize(file_get_contents($cache_fname));
 		} else {
