@@ -29,7 +29,8 @@ App::uses('lessc', 'Less.Vendor');
 
 class LessHelper extends HtmlHelper {
 	
-	public function __construct($options = null) {
+	public function __construct(View $View, $options = array()) {
+		parent::__construct($View, $options);
 		$this->lessFolder = new Folder(ROOT . DS . APP_DIR . DS . 'webroot' . DS . 'less');
 		$this->cssFolder = new Folder(ROOT . DS . APP_DIR . DS . 'webroot' . DS . 'css');
 		$this->cacheTime = '5 seconds';
