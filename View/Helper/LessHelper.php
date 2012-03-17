@@ -33,7 +33,6 @@ class LessHelper extends HtmlHelper {
 		parent::__construct($View, $options);
 		$this->lessFolder = new Folder(ROOT . DS . APP_DIR . DS . 'webroot' . DS . 'less');
 		$this->cssFolder = new Folder(ROOT . DS . APP_DIR . DS . 'webroot' . DS . 'css');
-		$this->cacheTime = '5 seconds';
 	}
 	
 	public function css($file) {
