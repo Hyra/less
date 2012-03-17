@@ -74,8 +74,11 @@ class LessHelper extends AppHelper {
 		
 		$new_cache = lessc::cexecute($cache);
 		if (!is_array($cache) || $new_cache['updated'] > $cache['updated']) {
-			file_put_contents($cache_fname, serialize($new_cache));
-			file_put_contents($css_fname, $new_cache['compiled']);
+			$cssFile = new File($css_fname, true);
+			$cssFile->write($new_cache['compiled']);
+			
+			$cacheFile = new File($cache_fname, true);
+			$cacheFile->write(serialize($new_cache));
 		}
 	}
 
