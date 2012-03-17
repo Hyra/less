@@ -19,15 +19,15 @@
  * @copyright     Copyright 2011, Mindthecode (http://www.mindthecode.com)
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-App::uses('AppHelper', 'View/Helper');
-App::uses('HtmlHelper', 'View/Helper');
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 App::uses('Component', 'Controller');
 
 App::uses('lessc', 'Less.Vendor');
 
-class LessHelper extends HtmlHelper {
+class LessHelper extends AppHelper {
+	
+	public $helpers = array('Html');
 	
 	public function __construct(View $View, $options = array()) {
 		parent::__construct($View, $options);
@@ -51,7 +51,7 @@ class LessHelper extends HtmlHelper {
 				$this->auto_compile_less($source, $target);
 			}
 		}
-		echo parent::css($file);
+		echo $this->Html->css($file);
 	}
 
 	public function auto_compile_less($less_fname, $css_fname) {
