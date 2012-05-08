@@ -24,62 +24,65 @@ App::uses('File', 'Utility');
 App::uses('Component', 'Controller');
 
 App::uses('lessc', 'Less.Vendor');
-
 class LessHelper extends AppHelper {
-	
+
 	public $helpers = array('Html');
-	
+
 	public function __construct(View $View, $options = array()) {
 		parent::__construct($View, $options);
-		$this->lessFolder = new Folder(ROOT . DS . APP_DIR . DS . 'webroot' . DS . 'less');
-		$this->cssFolder = new Folder(ROOT . DS . APP_DIR . DS . 'webroot' . DS . 'css');
+		$this->lessFolder = new Folder(WWW_ROOT.'less');
+		$this->cssFolder = new Folder(WWW_ROOT.'css');
 	}
-	
+
 	public function css($file) {
-		if(is_array($file)) {
-			foreach($file as $candidate) {
-				$source = $this->lessFolder->path . DS . $candidate . '.less';
-				if(file_exists($source)) {
-					$target = str_replace('.less', '.css', str_replace($this->lessFolder->path, $this->cssFolder->path, $source));
-					$this->auto_compile_less($source, $target);
-				}
-			}
-		} else {
-			$source = $this->lessFolder->path . DS . $file . '.less';
-			if(file_exists($source)) {
+		if (is_array($file)) {
+			foreach ($file as $candidate) {
+				$source = $this->lessFolder->path.DS.$candidate.'.less';
 				$target = str_replace('.less', '.css', str_replace($this->lessFolder->path, $this->cssFolder->path, $source));
 				$this->auto_compile_less($source, $target);
 			}
+		} else {
+			$source = $this->lessFolder->path.DS.$file.'.less';
+			$target = str_replace('.less', '.css', str_replace($this->lessFolder->path, $this->cssFolder->path, $source));
+			$this->auto_compile_less($source, $target);
 		}
 		echo $this->Html->css($file);
 	}
 
-	public function auto_compile_less($less_fname, $css_fname) {
-		// Check if cache folder is writable
-		if(!is_writable(CACHE . 'less')) {
-			echo '<span class="notice">';
-			echo __d('cake_dev', 'Your app/tmp/cache/less directory is NOT writable.');
-			echo '</span>';
+	public function auto_compile_less($lessFilename, $cssFilename) {
+		// Check if cache & output folders are writable and the less file exists.
+		if (!is_writable(CACHE.'less')) {
+			trigger_error(__d('cake_dev', '"%s" directory is NOT writable.', CACHE.'less'), E_USER_NOTICE);
+			return;
 		}
-		
+		if (file_exists($lessFilename) == false) {
+			trigger_error(__d('cake_dev', 'File: "%s" not found.', $lessFilename), E_USER_NOTICE);
+			return;
+		}
+
 		// Cache location
-		$cache_fname = CACHE . 'less' . DS . str_replace('/', '_', str_replace($this->lessFolder->path, '', $less_fname).".cache");
-		
+		$cacheFilename = CACHE.'less'.DS.str_replace('/', '_', str_replace($this->lessFolder->path, '', $lessFilename).".cache");
+
 		// Load the cache
-		if (file_exists($cache_fname)) {
-			$cache = unserialize(file_get_contents($cache_fname));
+		if (file_exists($cacheFilename)) {
+			$cache = unserialize(file_get_contents($cacheFilename));
 		} else {
-			$cache = $less_fname;
+			$cache = $lessFilename;
 		}
-		
+
 		$new_cache = lessc::cexecute($cache);
-		if (!is_array($cache) || $new_cache['updated'] > $cache['updated']) {
-			$cssFile = new File($css_fname, true);
-			$cssFile->write($new_cache['compiled']);
-			
-			$cacheFile = new File($cache_fname, true);
+		if (!is_array($cache) || $new_cache['updated'] > $cache['updated'] || file_exists($cssFilename) === false) {
+			$cssFile = new File($cssFilename, true);
+			if ($cssFile->write($new_cache['compiled']) === false) {
+				if (!is_writable(dirname($cssFilename))) {
+					trigger_error(__d('cake_dev', '"%s" directory is NOT writable.', dirname($cssFilename)), E_USER_NOTICE);
+				}
+				trigger_error(__d('cake_dev', 'Failed to write "%s"', $cssFilename), E_USER_NOTICE);
+			}
+
+			$cacheFile = new File($cacheFilename, true);
 			$cacheFile->write(serialize($new_cache));
 		}
 	}
 
-};
+}
