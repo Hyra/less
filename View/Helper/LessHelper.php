@@ -5,7 +5,7 @@
  * This plugin compiles your .less files to regular CSS withouth relying on
  * client- or serverside JavaScript
  *
- * Relies on the lessc.php class in Vendor
+ * Relies on the lessify.inc.php class in Vendor/lessphp
  *
  * PHP versions 4 and 5
  *
@@ -22,8 +22,12 @@
 App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 App::uses('Component', 'Controller');
+App::import('Vendor', 'Less.Lessify',
+  array(
+    'file' => 'lessphp' . DS . 'lessify.inc.php'
+  )
+);
 
-App::uses('lessc', 'Less.Vendor');
 class LessHelper extends AppHelper {
 
 	public $helpers = array('Html');
@@ -70,7 +74,7 @@ class LessHelper extends AppHelper {
 			$cache = $lessFilename;
 		}
 
-		$new_cache = lessc::cexecute($cache);
+		$new_cache = Lessify::cexecute($cache);
 		if (!is_array($cache) || $new_cache['updated'] > $cache['updated'] || file_exists($cssFilename) === false) {
 			$cssFile = new File($cssFilename, true);
 			if ($cssFile->write($new_cache['compiled']) === false) {

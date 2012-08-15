@@ -7,7 +7,24 @@ Everything is compiled on the server, cached, and served as regular css through 
 
 ### Get the files in place
 
-Clone from github: in your plugin directory type `git clone https://github.com/Hyra/less.git Less`
+#### Git submodule
+
+If you are developing your application with Git already, you can install the plugin as a submodule. In your git base folder type
+
+    git submodule add https://github.com/Hyra/less.git app/Plugin/Less
+
+#### Git clone
+
+In your plugin directory type
+
+    git clone https://github.com/Hyra/less.git Less
+
+### Initialize lessphp submodule and download files
+
+In the plugin folder ('app/Plugins/Less') type
+
+    git submodule init
+    git submodule update
 
 ### Create cache and less folders
 
