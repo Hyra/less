@@ -37,8 +37,34 @@ class LessHelper extends AppHelper {
 		$this->lessFolder = new Folder(WWW_ROOT.'less');
 		$this->cssFolder = new Folder(WWW_ROOT.'css');
 	}
-
-	public function css($file) {
+	
+	/**
+	 * When called, will reset lessFolder for specific theme
+	 *
+	 * @note Note that it assumes themes are stored in app/View/Themed
+	 *
+	 * @param string $theme_name
+	 */
+	private function set_theme($theme_name) {
+  	
+  	
+    $app_root = array_filter(explode(DS, WWW_ROOT));
+    
+    array_pop($app_root);
+    $app_root = implode(DS, $app_root);
+    
+    $theme_path = DS.$app_root.DS.'View'.DS.'Themed'.DS.$theme_name.DS.'webroot'.DS;
+		$this->lessFolder = new Folder($theme_path.'less');
+		$this->cssFolder = new Folder($theme_path.'css');
+  	
+	}
+	
+	public function css($file, $options = array()) {
+	
+	 if (isset($options['theme']) and trim($options['theme'])) {
+  	 $this->set_theme($options['theme']);
+	 }
+	 
 		if (is_array($file)) {
 			foreach ($file as $candidate) {
 				$source = $this->lessFolder->path.DS.$candidate.'.less';
