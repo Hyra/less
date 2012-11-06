@@ -47,12 +47,8 @@ class LessHelper extends AppHelper {
 	 */
 	private function set_theme($theme_name) {
   	
-  	
-    $app_root = array_filter(explode(DS, WWW_ROOT));
-    
-    array_pop($app_root);
-    $app_root = implode(DS, $app_root);
-    
+    $app_root = ROOT . DS . APP_DIR;
+
     $theme_path = DS.$app_root.DS.'View'.DS.'Themed'.DS.$theme_name.DS.'webroot'.DS;
 		$this->lessFolder = new Folder($theme_path.'less');
 		$this->cssFolder = new Folder($theme_path.'css');
