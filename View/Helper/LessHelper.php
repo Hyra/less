@@ -68,6 +68,9 @@ class LessHelper extends AppHelper {
 				$this->auto_compile_less($source, $target);
 			}
 		} else {
+			if (isset($options['plugin']) and trim($options['plugin'])){
+				$this->lessFolder= new Folder(APP.'Plugin'.DS.$options['plugin'].DS.'webroot'.DS.'less');
+			}
 			$source = $this->lessFolder->path.DS.$file.'.less';
 			$target = str_replace('.less', '.css', str_replace($this->lessFolder->path, $this->cssFolder->path, $source));
 			$this->auto_compile_less($source, $target);

@@ -40,6 +40,10 @@ Where you want to use LESS files, add the helper. Usually this will be your `App
 Next, simply add the less files to your views:
 
 	echo $this->Less->css('yourfile');
+
+or if the less file is located in the webroot of a plugin
+
+	echo $this->Less->css('yourfile',array('plugin' => 'PluginFolderName'));
 	
 or
 	
