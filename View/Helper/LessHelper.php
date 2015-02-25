@@ -75,7 +75,7 @@ class LessHelper extends AppHelper {
 			$target = str_replace('.less', '.css', str_replace($this->lessFolder->path, $this->cssFolder->path, $source));
 			$this->auto_compile_less($source, $target);
 		}
-		echo $this->Html->css($file);
+		echo $this->Html->css($file, $options);
 	}
 
 	public function auto_compile_less($lessFilename, $cssFilename) {
